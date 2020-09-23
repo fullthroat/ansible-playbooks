@@ -1,0 +1,48 @@
+---
+  - name: install-basic-packages
+    hosts: localhost
+    become: yes
+    become_user: root
+    tasks:
+      - name: Install packages
+        apt: name={{ item }} state=latest
+        with_items:
+         - jupyter-notebook
+         - python3-pip
+         - net-tools
+         - software-properties-common
+         - apache2
+         - mariadb-server
+         - default-jdk
+         - apt-transport-https
+         - ca-certificates
+         - curl
+         - gnupg-agent
+      - name: update bashrc
+        blockinfile: 
+          dest: /home/kaunain/.bashrc
+          backup: yes
+          insertafter : EOF
+          content : alias pip=pip3
+      - name: Install ml packages
+        pip: name={{ item }} state=latest
+        with_items:
+         - opencv-python
+         - torch
+         - keras
+         - theano
+         - mxnet
+         - pandas
+         - numpy
+         - torchvision
+         - spacy
+         - scipy
+         - nltk
+         - scikit-learn
+         - numpy
+         - tensorflow
+         - requests
+         - pendulum
+         - seaborn
+         - scrapy
+         - Django
